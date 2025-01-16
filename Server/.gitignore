@@ -1,0 +1,5 @@
+node_modules/
+js/
+ts/config/config.ts
+package-lock.json
+.env
