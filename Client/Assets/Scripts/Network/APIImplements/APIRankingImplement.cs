@@ -41,7 +41,7 @@ public class APIRankingImplement
 {
     async public UniTask<GetRankingResult> GetRanking()
     {
-        string request = String.Format("{0}/ranking/list", NetworkManager.Environment.APIServerURI);
+        string request = String.Format("{0}/ranking/list/{1}", NetworkManager.Environment.APIServerURI, NetworkManager.SystemSave.AppName);
         string json = await Network.WebRequest.GetRequest(request);
         var ret = JsonUtility.FromJson<GetRankingResult>(json);
         return ret;

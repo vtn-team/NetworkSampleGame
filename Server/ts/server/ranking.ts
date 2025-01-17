@@ -64,21 +64,16 @@ export async function save(req: any,res: any,route: any)
 	let savedata = JSON.stringify(data);
 	
 	await query("INSERT INTO ScoreBoard (AppName, UserId, UserName, Score, OtherData) VALUES (?,?,?,?,?) ON DUPLICATE KEY UPDATE Score = ?, OtherData = ?",[AppName, UserId, UserName, Score, savedata, Score, savedata]);
-	let ranking = await getRanking(AppName);
 	let rank = await query("SELECT (COUNT(*)+1) as Rank FROM ScoreBoard WHERE AppName = ? AND Score > ?",[AppName, Score]);
-	
-	console.log(ranking)
-	console.log(rank)
 	
 	data.UserId = UserId;
 	data.UserName = UserName;
 	data.Score = Score;
 	
 	return { 
-		status: 200,
-		you: data,
-		rank: Number(rank[0].Rank),
-		ranking: ranking
+		Status: 200,
+		You: data,
+		Rank: Number(rank[0].Rank),
 	};
 }
 
