@@ -6,6 +6,7 @@ exports.Routes = {
 		"/ranking" : {
 			"/list"   : "ranking#get#               ランキング取得",
 		},
+		"/getaddr"    : "ws#getaddr#                WebSocketアドレス取得",
 		"/load" : {
 			"@hash%s" : "usersave#loadData#         データ取得",
 		},

@@ -67,6 +67,20 @@ export class EventSystem {
 			types: types
 		};
 	}
+	
+	createdPayload(data: any) {
+		let payload:any = [];
+		if(data) {
+			for(var k in data) {
+				payload.push({
+					Key: k,
+					TypeName: typeof data[k],
+					Data: data[k]
+				});
+			}
+		}
+		return payload;
+	}
 
 	public execMessage(data: any) {
 		let payload = this.parsePayload(data["Payload"]);
@@ -97,19 +111,14 @@ export class EventSystem {
 	}
 
 	joinRoom(data: any) {
-		let gameId = parseInt(data.GameId);
-		if(this.games[gameId]) {
-			
-		}
-		
-		if(gameId === 0) {
-			console.log(`GAME ID:0 reject.`);
-			return ;
-		}
-		
-		//this.games[gameId] = ;
-		//this.sessionDic[data.SessionId] = gameId;
-		//console.log(`GAME ID:${gameId} - ${master.Name} join.`);
+		this.broadcast(createMessage(data.UserId, CMD.EVENT, TARGET.OTHER, {
+			EventId: 1,
+			Payload: this.createdPayload({
+				UserId : data.UserId,
+				UserName: data.UserName
+			})
+		}));
+		console.log(`USER ID:${data.UserId} - ${data.UserName} join.`);
 	}
 	
 	public removeSession(sessionId: string) {
