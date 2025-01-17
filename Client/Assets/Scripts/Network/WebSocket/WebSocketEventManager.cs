@@ -11,7 +11,7 @@ using WebSocketSharp;
 public class WebSocketEventManager : MonoBehaviour
 {
     //インスペクタ見る用
-    [SerializeField] bool _isConnected;
+    [SerializeField] bool _isConnected = false;
 
     public bool IsConnecting { get; private set; } = false;
 
@@ -73,7 +73,6 @@ public class WebSocketEventManager : MonoBehaviour
     void Connect(string address)
     {
         _client.Connect(address, Message);
-        IsConnecting = true;
     }
 
     public void Join(string userId, string userName)
@@ -114,6 +113,7 @@ public class WebSocketEventManager : MonoBehaviour
                     {
                         var welcome = JsonUtility.FromJson<WSPR_Welcome>(data.Data);
                         _sessionId = welcome.SessionId;
+                        IsConnecting = true;
                     }
                     break;
 

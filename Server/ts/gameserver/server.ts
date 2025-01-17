@@ -84,10 +84,10 @@ class Server {
 		//let msg = msgpack.pack(data);
 		for(var k in this.sessions) {
 			let us = this.sessions[k];
-			if(!us.chkTarget(data.Target, data.UserId)) return;
+			if(!us.chkTarget(data.Target, data.UserId)) continue;
 			
 			us.sendMessage(msg);
-			console.log("send:" + msg);
+			//console.log("send:" + msg);
 		}
 	};
 	
@@ -108,7 +108,7 @@ class Server {
 			});
 
 			ws.on('message', (message: string) => {
-				console.log(' Received: %s', message);
+				//console.log(' Received: %s', message);
 				try
 				{
 					let data = JSON.parse(message);
