@@ -9,6 +9,7 @@ public class NetworkPlayer : MonoBehaviour, IEventReceiver
     public bool IsActive => gameObject.activeSelf;
 
     bool _isSetup = false;
+    float _eraseTimer = 0.0f;
     string _userId;
     Vector3 _targetPosition = Vector3.zero;
 
@@ -19,6 +20,9 @@ public class NetworkPlayer : MonoBehaviour, IEventReceiver
             NetworkManager.RegisterEventReceiver(this);
             _isSetup = true;
         }
+
+        _eraseTimer += Time.deltaTime;
+        if (_eraseTimer > 5.0f) return;
 
         Vector3 moveVec = _targetPosition - this.transform.position;
         if (moveVec.magnitude < 2.0f) return;
@@ -38,8 +42,10 @@ public class NetworkPlayer : MonoBehaviour, IEventReceiver
         {
             case EventDefine.Move:
                 if (_userId != data.GetStringData("UserId")) break;
+
                 _targetPosition.x = data.GetFloatData("PosX");
                 _targetPosition.z = data.GetFloatData("PosZ");
+                _eraseTimer = 0.0f;
                 break;
         }
     }

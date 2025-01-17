@@ -111,7 +111,7 @@ export class EventSystem {
 	}
 
 	joinRoom(data: any) {
-		this.broadcast(createMessage(data.UserId, CMD.EVENT, TARGET.OTHER, {
+		this.broadcast(createMessage(data.SessionId, CMD.EVENT, TARGET.OTHER, {
 			EventId: 1,
 			Payload: this.createdPayload({
 				UserId : data.UserId,

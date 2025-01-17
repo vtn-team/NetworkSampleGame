@@ -610,13 +610,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec36753cca918194e84782f1e079f83a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 1366633550}
-  _otherPrefab: {fileID: 8398985084612766863, guid: 398adfd9a9b02524ab3c63b37e9050f9, type: 3}
   _chat: {fileID: 2099796446}
   _chatViewButton: {fileID: 1994103391}
   _users: {fileID: 1009400133}
   _inputText: {fileID: 850977889}
   _chatText: {fileID: 1134953328}
+  _userList: {fileID: 0}
 --- !u!4 &567122159
 Transform:
   m_ObjectHideFlags: 0
@@ -738,7 +737,6 @@ GameObject:
   - component: {fileID: 739460264}
   - component: {fileID: 739460263}
   - component: {fileID: 739460262}
-  - component: {fileID: 739460265}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -825,22 +823,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 739460260}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &739460265
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739460260}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!1 &846327019
 GameObject:
   m_ObjectHideFlags: 0
@@ -1894,6 +1876,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1366633549}
   - component: {fileID: 1366633550}
+  - component: {fileID: 1366633551}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1930,6 +1913,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 1
+--- !u!54 &1366633551
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366633548}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &1410201560
 GameObject:
   m_ObjectHideFlags: 3
