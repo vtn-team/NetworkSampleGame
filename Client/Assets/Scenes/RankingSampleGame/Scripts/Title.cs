@@ -1,5 +1,7 @@
+using Codice.CM.WorkspaceServer;
 using Cysharp.Threading.Tasks;
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +12,7 @@ namespace SampleGame
     /// </summary>
     public class Title : MonoBehaviour
     {
+        [SerializeField] TextMeshProUGUI _ranking;
         private void Start()
         {
             //ランキング取得
@@ -18,6 +21,15 @@ namespace SampleGame
                 var result = await NetworkManager.GetRanking();
 
                 await UniTask.SwitchToMainThread();
+
+                string text = "";
+                int rank = 1;
+                foreach(var rd in result.RankingData)
+                {
+                    text += rank + " : " + rd.UserName + " - Score:" + rd.Score + "\n";
+                    rank++;
+                }
+                _ranking.text = text;
             }).Forget();
         }
 
