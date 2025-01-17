@@ -29,12 +29,10 @@ export function createMessage(senderId: string, command: CMD, target:TARGET, dat
 
 //NOTE: ゲーム同士でイベントのやり取りをする
 export class EventSystem {
-	games: any;
 	sessionDic: any;
 	broadcast: any;
 
 	constructor(bc: any) {
-		this.games = {};
 		this.sessionDic = {};
 		this.broadcast = bc;
 	}
@@ -111,13 +109,33 @@ export class EventSystem {
 	}
 
 	joinRoom(data: any) {
-		this.broadcast(createMessage(data.SessionId, CMD.EVENT, TARGET.OTHER, {
+		let UserId = data.SessionId;
+		this.broadcast(createMessage(UserId, CMD.EVENT, TARGET.OTHER, {
 			EventId: 1,
 			Payload: this.createdPayload({
 				UserId : data.UserId,
 				UserName: data.UserName
 			})
 		}));
+		
+		//他の人もJoinしていく
+		for(let sessionId in this.sessionDic)
+		{
+			let d = this.sessionDic[sessionId];
+			this.broadcast(createMessage(UserId, CMD.EVENT, TARGET.SELF, {
+				EventId: 1,
+				Payload: this.createdPayload({
+					UserId : d.UserId,
+					UserName: d.UserName
+				})
+			}));
+			console.log(`USER ID:${UserId} - ${d.UserName} send join.`);
+		}
+		
+		this.sessionDic[UserId] = {
+			UserId : data.UserId,
+			UserName: data.UserName
+		};
 		console.log(`USER ID:${data.UserId} - ${data.UserName} join.`);
 	}
 	
@@ -126,21 +144,8 @@ export class EventSystem {
 			return;
 		}
 		
-		let gameId = this.sessionDic[sessionId];
-		delete this.games[gameId];
 		delete this.sessionDic[sessionId];
-		
-		console.log(`GAME ID:${gameId} leave.`);
-	}
-	
-	public getActiveGames() {
-		let games:any = [];
-		
-		for(var gId in this.games) {
-			let us = this.games[gId];
-		}
-		
-		return games;
+		console.log(`USER ID:${sessionId} leave.`);
 	}
 	
 	//処理

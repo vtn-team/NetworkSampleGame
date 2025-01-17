@@ -135,6 +135,7 @@ class Server {
 			//Joinをもらうためのエコーバック
 			let echoback = createMessage("None", CMD.WELCOME, TARGET.SELF, { SessionId: uuid });
 			let payload = JSON.stringify(echoback);
+			console.log(`${uuid} send session.`);
 			ws.send(payload);
 		});
 		
@@ -172,11 +173,6 @@ class Server {
 	public getActiveSessionNum() {
 		return this.lastActiveNum;
 	}
-	
-	//アクティブなゲーム数を返す
-	public getActiveGames() {
-		return this.eventSystem.getActiveGames();
-	}
 }
 
 
@@ -201,11 +197,4 @@ export function getActiveSessionNum() {
 	if(gServer == null) return 0;
 	
 	return gServer.getActiveSessionNum();
-}
-
-//(公開関数)アクティブなゲーム数を返す
-export function getActiveGames() {
-	if(gServer == null) return 0;
-	
-	return gServer.getActiveGames();
 }
