@@ -12,7 +12,6 @@ namespace SampleGame
     {
         void Start()
         {
-            ScoreManager.Reset();
         }
 
         private void Update()

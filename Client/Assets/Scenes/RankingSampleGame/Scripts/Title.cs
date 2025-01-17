@@ -15,6 +15,8 @@ namespace SampleGame
         [SerializeField] TextMeshProUGUI _ranking;
         private void Start()
         {
+            ScoreManager.Reset();
+
             //ランキング取得
             UniTask.RunOnThreadPool(async () =>
             {
