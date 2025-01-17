@@ -10,7 +10,9 @@ public class SendRankingRequest
 {
     public string AppName;
     public string UserId;
+    public string UserName;
     public int Score;
+    public int PlayTime;
 }
 
 /// <summary>
@@ -45,10 +47,17 @@ public class APIRankingImplement
         return ret;
     }
 
-    async public UniTask<SendRankingResult> SendRequest(int Score)
+    async public UniTask<SendRankingResult> SendRequest(int score, int playtime)
     {
-        var req = new SendRankingRequest() { Score = Score  };
-        string request = String.Format("{0}/ranking/register", NetworkManager.Environment.APIServerURI);
+        var req = new SendRankingRequest() { 
+            AppName = NetworkManager.SystemSave.AppName,
+            UserId = NetworkManager.SystemSave.SaveKey,
+            UserName = NetworkManager.SystemSave.UserName,
+            Score = score,
+            PlayTime = playtime
+        };
+
+        string request = String.Format("{0}/ranking/save", NetworkManager.Environment.APIServerURI);
         string json = await Network.WebRequest.PostRequest(request, req);
         var ret = JsonUtility.FromJson<SendRankingResult>(json);
         return ret;

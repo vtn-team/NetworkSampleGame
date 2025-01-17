@@ -4,18 +4,20 @@ exports.Routes = {
 		"/route"		: "index#route#APIリスト羅列",
 		"/favicon.ico"	: "resource#favicon#favicon",
 		"/ranking" : {
-			"/list"   : "ranking#get#               ランキング取得",
+			"/list"   : {
+				"@AppName%s" : "ranking#get#        ランキング取得",
+			}
 		},
 		"/getaddr"    : "ws#getaddr#                WebSocketアドレス取得",
 		"/load" : {
-			"@SaveKey%s" : "usersave#loadData#         データ取得",
+			"@SaveKey%s" : "usersave#loadData#      データ取得",
 		},
 	},
 	POST: {
 		"/ranking" : {
-			"/save"   : "ranking#save#               ランキング登録",
+			"/save"   : "ranking#save#              ランキング登録",
 		},
-		"/save" : "usersave#saveData#                データ保存",
+		"/save" : "usersave#saveData#               データ保存",
 	}
 }
 

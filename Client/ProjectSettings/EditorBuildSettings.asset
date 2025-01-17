@@ -6,9 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/GameServerSample.unity
+    path: Assets/Scenes/GameServerSample/GameServerSample.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/Title.unity
-    guid: a4a5e6b469b696f4499d9861a74d3c86
+    path: Assets/Scenes/RankingSampleGame/Title.unity
+    guid: aea7e2d1c409644458a42a560369a9be
+  - enabled: 1
+    path: Assets/Scenes/RankingSampleGame/InGame.unity
+    guid: 5145a59f9951bd24d8a76b06f897220f
+  - enabled: 1
+    path: Assets/Scenes/RankingSampleGame/Result.unity
+    guid: a8a4a31868d239947ad2400c0cfb7066
   m_configObjects: {}

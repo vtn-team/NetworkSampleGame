@@ -120,7 +120,7 @@ public class NetworkManager
     /// </summary>
     async UniTask<SendRankingResult> SendRankingImplement(int score)
     {
-        return await _rankingAPI.SendRequest(score);
+        return await _rankingAPI.SendRequest(score, 0);
     }
 
     /// <summary>

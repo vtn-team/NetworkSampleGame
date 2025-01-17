@@ -4,5 +4,5 @@
 /// </summary>
 public class ProductionEnvironment : IEnvironment
 {
-    public string APIServerURI => "https://node.vtn-game.com";
+    public string APIServerURI => "https://ngs.vtn-game.com";
 }

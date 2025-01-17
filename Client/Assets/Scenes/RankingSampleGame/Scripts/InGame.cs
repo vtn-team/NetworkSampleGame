@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,12 +11,14 @@ namespace SampleGame
     public class InGame : MonoBehaviour, IEventReceiver
     {
         [SerializeField] float _spawnInterval;
+        [SerializeField] float _gameTime;
         [SerializeField] GameObject _player;
         [SerializeField] GameObject _enemy;
         [SerializeField] GameObject _comment;
         [SerializeField] GameObject _canvasRoot;
 
         float _timer = 0.0f;
+        float _gametimer = 0.0f;
 
         void Awake()
         {
@@ -34,9 +37,17 @@ namespace SampleGame
                 GameObject.Instantiate(_enemy, new Vector3(UnityEngine.Random.Range(-20, 20), 50, -1), Quaternion.identity);
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            _gametimer += Time.deltaTime;
+            if (_gametimer > _gameTime || Input.GetKeyDown(KeyCode.Space))
             {
-                //ランキング送信
+                //ランキング送信してリザルト
+                UniTask.RunOnThreadPool(async () =>
+                {
+                    var result = await NetworkManager.SendRanking(ScoreManager.Score);
+
+                    await UniTask.SwitchToMainThread();
+                    SceneManager.LoadScene("Result");
+                }).Forget();
             }
         }
 
