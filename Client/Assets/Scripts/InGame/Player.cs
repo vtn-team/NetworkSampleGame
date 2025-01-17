@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Cysharp.Threading.Tasks;
+using SampleGame;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,8 +18,21 @@ public class Player : MonoBehaviour, IEventReceiver
 
     void Start()
     {
+        gameObject.SetActive(false);
         _rb = GetComponent<Rigidbody>();
         NetworkManager.RegisterEventReceiver(this);
+
+        UniTask.RunOnThreadPool(async () =>
+        {
+            var save = await NetworkManager.LoadGameData<PlayerSave>();
+
+            await UniTask.SwitchToMainThread();
+            if (save != null)
+            {
+                gameObject.transform.position = save.Position;
+            }
+            gameObject.SetActive(true);
+        }).Forget();
     }
 
     void Update()
@@ -41,6 +56,14 @@ public class Player : MonoBehaviour, IEventReceiver
 
         _rb.velocity = move + _pow;
         _pow *= 0.9f;
+
+        //セーブ
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            PlayerSave save = new PlayerSave();
+            save.Position = this.transform.position;
+            NetworkManager.SaveGameData<PlayerSave>(save).Forget();
+        }
 
         //
         if (_isSetup && NetworkManager.SystemSave.IsMMONetwork)

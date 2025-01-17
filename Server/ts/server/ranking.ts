@@ -29,8 +29,8 @@ export async function get(req: any,res: any,route: any)
 	let ret = await getRanking(route.query.AppName);
 	
 	return { 
-		status: 200,
-		ranking: ret,
+		Status: 200,
+		RankingData: ret,
 	};
 }
 

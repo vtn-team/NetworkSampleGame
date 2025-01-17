@@ -8,7 +8,7 @@ exports.Routes = {
 		},
 		"/getaddr"    : "ws#getaddr#                WebSocketアドレス取得",
 		"/load" : {
-			"@hash%s" : "usersave#loadData#         データ取得",
+			"@SaveKey%s" : "usersave#loadData#         データ取得",
 		},
 	},
 	POST: {

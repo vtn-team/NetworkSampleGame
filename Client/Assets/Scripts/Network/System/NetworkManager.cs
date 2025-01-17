@@ -20,8 +20,14 @@ public class NetworkManager
     //APIまわり。非同期関数
     /// <summary>ランキング取得</summary>
     static async public UniTask<GetRankingResult> GetRanking() { return await _instance.GetRankingImplement(); }
-    /// <summary>ゲーム終了</summary>
+    /// <summary>スコア送信</summary>
     static async public UniTask<SendRankingResult> SendRanking(int Score) { return await _instance.SendRankingImplement(Score); }
+
+    /// <summary>ロード</summary>
+    static async public UniTask<T> LoadGameData<T>() { return await _instance.LoadGameDataImplement<T>(); }
+    /// <summary>セーブ</summary>
+    static async public UniTask<GameSaveResult> SaveGameData<T>(T save) { return await _instance.SaveGameDataImplement<T>(save); }
+
 
     //ゲームサーバーまわり。
     /// <summary>WebSocketの準備ができているか</summary>
@@ -53,6 +59,7 @@ public class NetworkManager
 
     //APIリスト
     APIRankingImplement _rankingAPI = new APIRankingImplement();
+    APIGameSaveImplement _gameSave = new APIGameSaveImplement();
 
     //ユーザID
     string _userId = "";
@@ -115,6 +122,23 @@ public class NetworkManager
     {
         return await _rankingAPI.SendRequest(score);
     }
+
+    /// <summary>
+    /// ロード実装
+    /// </summary>
+    async UniTask<T> LoadGameDataImplement<T>()
+    {
+        return await _gameSave.Load<T>(_systemSave.SaveKey);
+    }
+
+    /// <summary>
+    /// セーブ実装
+    /// </summary>
+    async UniTask<GameSaveResult> SaveGameDataImplement<T>(T data)
+    {
+        return await _gameSave.Save(_systemSave.SaveKey, data);
+    }
+
 
     //イベント系
 
